@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request
 import hashlib
 import json
+import ast
 
 app = Flask(__name__)
 
@@ -10,27 +11,25 @@ def main_redirect():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
-
-@app.route('/login/check', methods=['GET', 'POST'])
-def login_check():
-    f = open('static/config/mgmt_config.json', 'r', encoding='utf-8')# 读取config
+    f = open('mgmt_daemon/static/config/mgmt_config.json', 'r', encoding='utf-8')# 读取config
     json_res = json.load(f)
     json_username = json_res['username']
     json_password = json_res['password']
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        request_data = ast.literal_eval(json.dumps(request.form))
+        print(request_data)
+        username = request_data['username']
+        password = request_data['password']
         md5 = hashlib.md5()
         md5.update(password.encode('utf-8'))
         str_md5 = md5.hexdigest()
         if username == json_username and str_md5 == json_password:
             return redirect('/board')
         else:
-            return render_template('login_error.html')
+            return '用户名或密码错误'
     else:
-        print('请求必须为POST类型')
         pass
+    return render_template('login.html')
 
 @app.route('/board')
 def board():

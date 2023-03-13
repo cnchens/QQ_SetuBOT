@@ -11,13 +11,18 @@
         <h1>Setu MGMT</h1>
     </div>
     <div class="login_form">
-        <form action="/login/check" method="post">
-            <h3>Login</h3>
-            用户名：<input type="text" name="username" id="">
-            <br>
-            密码：<input type="password" name="username" id="">
-            <br>
-            <input type="submit" value="登录">
+        <form action="/login" method="post">
+            <p>
+                <label for="username">用户名：</label>
+                <input type="text" name="username" placeholder="请输入用户名" id="username">
+            </p>
+            <p>
+                <label for="password">密码：</label>
+                <input type="password" name="password" placeholder="请输入密码" id="password">
+            </p>
+            <p>
+                <input type="submit" value="登录">
+            </p>
         </form>
     </div>
 </body>
