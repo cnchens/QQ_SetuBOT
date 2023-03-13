@@ -35,5 +35,9 @@ def login():
 def board():
     return render_template('board.html')
 
+@app.route('/upload')
+def upload():
+    return render_template()
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port='20500')
